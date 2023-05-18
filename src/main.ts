@@ -1,5 +1,17 @@
 import { createApp } from 'vue'
-import './style.css'
+import './styles'
 import App from './App.vue'
+import router from './router'
+import '@/router/permission'
+import { loadDirectives } from "@/directives"
 
-createApp(App).mount('#app')
+const app = createApp(App)
+
+/** 加载指令 */
+loadDirectives(app)
+
+/** 注册路由 */
+app.use(router)
+router.isReady().then(() => {
+  app.mount("#app")
+})

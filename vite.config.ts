@@ -2,6 +2,7 @@ import { defineConfig, loadEnv } from "vite";
 import type { ConfigEnv, UserConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import path, { resolve } from "path";
+import svgLoader from "vite-svg-loader"
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 /** @type {import('vite').UserConfig} */
@@ -62,13 +63,21 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
     },
     plugins: [
       vue(),
+      svgLoader({ defaultImport: "url" }),
       AutoImport({
+        dts: "./types/auto-imports.d.ts",
         // 自动导入 Vue 相关函数，如：ref, reactive, toRef 等
         imports: ["vue"],
+        eslintrc: {
+          enabled: true, // 默认 false
+          filepath: "./types/.eslintrc-auto-import.json", // 默认 "./.eslintrc-auto-import.json"
+          globalsPropValue: true // 默认 true (true | false | "readonly" | "readable" | "writable" | "writeable")
+        }
       }),
       Components({
+        dts: "./types/components.d.ts",
         // 指定自动导入的组件位置，默认是 src/components
-        // dirs: ['src/components'],
+        dirs: ['src/components'],
       }),
     ],
   };
