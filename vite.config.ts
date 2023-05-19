@@ -2,9 +2,11 @@ import { defineConfig, loadEnv } from "vite";
 import type { ConfigEnv, UserConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import path, { resolve } from "path";
-import svgLoader from "vite-svg-loader"
+import svgLoader from "vite-svg-loader";
+import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
+import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 /** @type {import('vite').UserConfig} */
 
 export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
@@ -63,7 +65,13 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
     },
     plugins: [
       vue(),
+      /** 将 SVG 静态图转化为 Vue 组件 */
       svgLoader({ defaultImport: "url" }),
+      /** SVG */
+      createSvgIconsPlugin({
+        iconDirs: [path.resolve(process.cwd(), "src/icons/svg")],
+        symbolId: "icon-[dir]-[name]",
+      }),
       AutoImport({
         dts: "./types/auto-imports.d.ts",
         // 自动导入 Vue 相关函数，如：ref, reactive, toRef 等
@@ -71,13 +79,19 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
         eslintrc: {
           enabled: true, // 默认 false
           filepath: "./types/.eslintrc-auto-import.json", // 默认 "./.eslintrc-auto-import.json"
-          globalsPropValue: true // 默认 true (true | false | "readonly" | "readable" | "writable" | "writeable")
-        }
+          globalsPropValue: true, // 默认 true (true | false | "readonly" | "readable" | "writable" | "writeable")
+        },
+        resolvers: [
+          ElementPlusResolver(),
+        ],
       }),
       Components({
         dts: "./types/components.d.ts",
         // 指定自动导入的组件位置，默认是 src/components
-        dirs: ['src/components'],
+        dirs: ["src/components"],
+        resolvers: [
+          ElementPlusResolver(),
+        ],
       }),
     ],
   };
