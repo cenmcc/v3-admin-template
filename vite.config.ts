@@ -6,7 +6,8 @@ import svgLoader from "vite-svg-loader";
 import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
-import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
+import { NaiveUiResolver } from "unplugin-vue-components/resolvers";
+
 /** @type {import('vite').UserConfig} */
 
 export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
@@ -75,23 +76,31 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
       AutoImport({
         dts: "./types/auto-imports.d.ts",
         // 自动导入 Vue 相关函数，如：ref, reactive, toRef 等
-        imports: ["vue"],
+        imports: [
+          "vue",
+          "vue-router",
+          "pinia",
+          {
+            "naive-ui": [
+              "useDialog",
+              "useMessage",
+              "useNotification",
+              "useLoadingBar",
+            ],
+          },
+        ],
         eslintrc: {
           enabled: true, // 默认 false
           filepath: "./types/.eslintrc-auto-import.json", // 默认 "./.eslintrc-auto-import.json"
           globalsPropValue: true, // 默认 true (true | false | "readonly" | "readable" | "writable" | "writeable")
         },
-        resolvers: [
-          ElementPlusResolver(),
-        ],
+        resolvers: [],
       }),
       Components({
         dts: "./types/components.d.ts",
         // 指定自动导入的组件位置，默认是 src/components
         dirs: ["src/components"],
-        resolvers: [
-          ElementPlusResolver(),
-        ],
+        resolvers: [NaiveUiResolver()],
       }),
     ],
   };

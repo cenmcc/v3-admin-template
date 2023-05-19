@@ -5,14 +5,15 @@ const Layout = () => import('@/layout/index.vue');
 // 常驻路由
 export const constantRoutes: RouteRecordRaw[] = [
   {
+    path: '/login',
+    component: () => import('@/views/login/index.vue')
+  },
+  {
     path: '/',
     component: Layout,
     meta: {},
   },
-  {
-    path: '/login',
-    component: () => import('@/views/login/index.vue')
-  },
+
   {
     path: "/404",
     component: () => import("@/views/error-page/404.vue"),
@@ -34,4 +35,15 @@ const router = createRouter({
   routes: constantRoutes
 })
 
+const r = {
+  path: '/settle',
+  component: Layout,
+  children: [
+    {
+      path: '',
+      component: () => import('@/views/home/index.vue')
+    }
+  ]
+}
+router.addRoute(r)
 export default router

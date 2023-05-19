@@ -6,3 +6,7 @@ html,body,#app {
 :root {
   --v3-header-height: 50px;
 }
+
+#nprogress .bar {
+  background: #18a058 !important; //自定义颜色
+}

@@ -5,7 +5,7 @@ import router from './router'
 import '@/router/permission'
 import store from '@/store'
 import { loadDirectives } from "@/directives"
-import { loadSvg, loadIcon } from "@/icons"
+import { loadSvg } from "@/icons"
 
 
 const app = createApp(App)
@@ -17,7 +17,6 @@ const app = createApp(App)
 loadDirectives(app)
 /** 注册全局Svg */
 loadSvg(app)  
-loadIcon(app) // 注册element-plus-icon
 /** 注册路由 */
 app.use(router).use(store)
 router.isReady().then(() => {
