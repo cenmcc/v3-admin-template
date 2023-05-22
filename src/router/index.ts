@@ -13,7 +13,16 @@ export const constantRoutes: RouteRecordRaw[] = [
     component: Layout,
     meta: {},
   },
-
+  {
+    path: '/template',
+    component: Layout,
+    children: [
+      {
+        path: 'table',
+        component: () => import('@/views/template/table.vue')
+      }
+    ]
+  },
   {
     path: "/404",
     component: () => import("@/views/error-page/404.vue"),

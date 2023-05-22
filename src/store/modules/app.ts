@@ -11,6 +11,7 @@ export const useAppStore = defineStore("app", {
   actions: {
     // 切换侧边栏状态
     toggleSidebar(withoutAnimation: boolean) {
+      console.log(111)
       this.opened = !this.opened;
       this.withoutAnimation = withoutAnimation
     },
