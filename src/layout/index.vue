@@ -12,6 +12,7 @@
 import Header from './header/index.vue'
 import Sidebar from './sidebar/index.vue'
 import Main from './main/index.vue'
+import Tags from './tags/index.vue'
 </script>
 
 <style scoped lang="scss">
@@ -19,10 +20,11 @@ import Main from './main/index.vue'
   height: 100%;
   width: 100%;
   .layout-header {
-    height: 50px;
+    height: 80px;
+    background: #FFF;
   }
   .layout-content {
-      top: 50px;
+      top: 80px;
       padding: 10px;
       background-color: #f2f3f5;
     }

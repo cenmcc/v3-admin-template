@@ -10,18 +10,30 @@ const data = [
   },
   {
     id: 2,
-    text: "测试",
-    urlpath: "/template/111",
+    text: "权限管理",
+    urlpath: "/permissions",
     meta: {
-      icon: "icon-creditcard",
-      title: "表单",
+      icon: "icon-tag",
+      title: "权限管理",
     },
     children: [
       {
         id: 24,
         parentid: 12,
         text: "角色管理",
-        urlpath: "/authority/role",
+        urlpath: "/permissions/role-manage",
+        permissions:
+          '["RoleManagement:view","RoleManagement:create","RoleManagement:edit"]',
+        meta: {
+          title: "角色管理",
+        },
+        isSubmenu: true,
+      },
+      {
+        id: 25,
+        parentid: 12,
+        text: "用户管理",
+        urlpath: "/permissions/user-manage",
         permissions:
           '["RoleManagement:view","RoleManagement:create","RoleManagement:edit"]',
         meta: {

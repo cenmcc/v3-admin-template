@@ -11,15 +11,46 @@ export const constantRoutes: RouteRecordRaw[] = [
   {
     path: '/',
     component: Layout,
-    meta: {},
+    meta: {
+      title: '首页'
+    },
   },
   {
     path: '/template',
     component: Layout,
+    redirect: '/template/table',
+    meta: {
+      title: '模板'
+    },
     children: [
       {
         path: 'table',
+        meta: {
+          title: '表单'
+        },
         component: () => import('@/views/template/table.vue')
+      }
+    ]
+  },
+  {
+    path: '/permissions',
+    component: Layout,
+    meta: { title: '权限管理' },
+    redirect: '/permissions/user-manage',
+    children: [
+      {
+        path: 'user-manage',
+        meta: {
+          title: '用户管理'
+        },
+        component: () => import('@/views/permissions/userManage.vue')
+      },
+      {
+        path: 'role-manage',
+        meta: {
+          title: '角色管理'
+        },
+        component: () => import('@/views/permissions/roleManage.vue')
       }
     ]
   },

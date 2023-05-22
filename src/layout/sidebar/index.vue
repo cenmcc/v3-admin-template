@@ -3,7 +3,7 @@
     bordered
     collapse-mode="width"
     :collapsed-width="64"
-    :width="240"
+    :width="220"
     :native-scrollbar="false"
     class="layout-sidebar"
     :collapsed="isCollapsed"
