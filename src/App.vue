@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { NConfigProvider, GlobalThemeOverrides } from "naive-ui";
+import { NConfigProvider, GlobalThemeOverrides,zhCN, dateZhCN } from "naive-ui";
+
 const themeOverrides: GlobalThemeOverrides = {
   common: {
     primaryColor: "#409eff",
@@ -13,7 +14,7 @@ const themeOverrides: GlobalThemeOverrides = {
 </script>
 
 <template>
-  <n-config-provider :theme-overrides="themeOverrides">
+  <n-config-provider :locale="zhCN" :date-locale="dateZhCN" :theme-overrides="themeOverrides">
     <n-message-provider>
       <RouterView></RouterView>
     </n-message-provider>

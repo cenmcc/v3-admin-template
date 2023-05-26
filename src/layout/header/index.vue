@@ -21,7 +21,6 @@
     <div class="header-tags">
       <n-tag
         closable
-        :checkable="tag.path === route.path"
         :checked="tag.path === route.path"
         size="small"
         :type="tag.path === route.path ? 'info' : 'default'"
@@ -30,8 +29,7 @@
         class="tags"
         @close="handleTagsClose(tag)"
         @click="handleTagsClick(tag)"
-      >{{ tag.title }}
-        <!-- <router-link :to="tag.fullPath">{{ tag.title }}</router-link> -->
+        >{{ tag.title }}
       </n-tag>
     </div>
   </n-layout-header>
@@ -40,11 +38,11 @@
 <script setup lang="ts">
 import { useAppStore } from "@/store/modules/app";
 import { useTagsViewStore } from "@/store/modules/tagsview";
-import type { TagsViewState } from '@/store/modules/tagsview'
+import type { TagsViewState } from "@/store/modules/tagsview";
 const appStore = useAppStore();
 const tagsViewStore = useTagsViewStore();
 const route = useRoute();
-const router = useRouter()
+const router = useRouter();
 interface ICrumbs {
   clickable: boolean;
   href: string;
@@ -77,14 +75,14 @@ const addTags = () => {
   tagsViewStore.addVisitedView(route);
 };
 const handleTagsClose = (item: TagsViewState) => {
-  tagsViewStore.removeVisitedView(item)
-}
+  tagsViewStore.removeVisitedView(item);
+};
 const handleTagsClick = (item: TagsViewState) => {
-  router.push(item.fullPath)
-}
-watch( 
+  router.push(item.fullPath);
+};
+watch(
   route,
-  (newValue) => {
+  () => {
     addTags();
   },
   {
@@ -122,11 +120,11 @@ watch(
     background-color: #fff;
     box-shadow: 0px 0px 3px #ccc;
     z-index: 99;
-    padding: 0 10px;
     display: flex;
     align-items: center;
+    padding-left: 10px;
     .tags {
-      margin-left: 10px;
+      margin-left: 5px;
       a {
         text-decoration: none;
       }

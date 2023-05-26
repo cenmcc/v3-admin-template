@@ -32,9 +32,6 @@ const appStore = useAppStore()
 const isCollapsed = computed(() => {
   return !appStore.opened
 })
-const onCollapsed = () => {
-  console.log(1111)
-}
 
 
 
