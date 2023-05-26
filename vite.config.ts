@@ -7,6 +7,8 @@ import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 import { NaiveUiResolver } from "unplugin-vue-components/resolvers";
+import vueJsx from "@vitejs/plugin-vue-jsx";
+
 
 /** @type {import('vite').UserConfig} */
 
@@ -66,6 +68,7 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
     },
     plugins: [
       vue(),
+      vueJsx(),
       /** 将 SVG 静态图转化为 Vue 组件 */
       svgLoader({ defaultImport: "url" }),
       /** SVG */

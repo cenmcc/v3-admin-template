@@ -26,5 +26,6 @@ withDirectives(
     h(NButton, { quaternary: true, type: "info", onClick: () => {}}, { default: "编辑" }),
     [[permission, '指令传参']]
 ),
+// 注意事项: vue指令无法控制popConfirm组件的隐藏
 ```
 

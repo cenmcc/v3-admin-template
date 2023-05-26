@@ -1,6 +1,6 @@
 <template>
   <n-card>
-    <n-form inline :label-width="80" :model="searchForm" ref="searchFormRef">
+    <n-form inline :label-width="80" :model="searchForm" ref="searchFormRef" label-placement="left">
       <n-form-item label="姓名">
         <n-input
           v-model:value="searchForm.name"
@@ -22,15 +22,16 @@
       :columns="columns"
       :data="tableData"
       :pagination="pagination"
+      remote
       bordered
       :single-line="false"
+      @update:page="handlePageChange"
     />
   </n-card>
 </template>
 
 <script setup lang="ts">
-import { withDirectives, resolveDirective } from "vue";
-import { NButton, NPopconfirm } from "naive-ui";
+import CButton from "../../components/CButton/CButton";
 import type { DataTableColumn } from "naive-ui";
 interface ISearchForm {
   name: string;
@@ -38,7 +39,6 @@ interface ISearchForm {
 interface ITableData extends ISearchForm {
   age: number;
 }
-const permission = resolveDirective("permission");
 
 // 搜索
 const searchForm1: ISearchForm = {
@@ -84,50 +84,66 @@ const columns: DataTableColumn[] = [
     fixed: "right",
     align: "center",
     render(row) {
-      const actions = [
-        withDirectives(
-          h(
-            NButton,
-            {
-              quaternary: true,
-              type: "info",
-              onClick: () => {
-                console.log("编辑", row.name);
-              },
-            },
-            { default: "编辑" }
-          ),
-          [[permission, ['11']]]
-        ),
-        withDirectives(
-          h(
-            NPopconfirm,
-            {
-              onNegativeClick: (e) => {
-                console.log("onNegativeClick", e);
-              },
-              onPositiveClick: (e) => {
-                console.log("onPositiveClick", e);
-              },
-            },
-            {
-              trigger: () =>
-                h(
-                  NButton,
-                  { type: "error", quaternary: true },
-                  { default: "删除" }
-                ),
-              default: "删除提示的文案",
-            }
-          ),
-          [[permission, ['11']]]
-        ),
+      return [
+        h(CButton, {
+          text: "编辑",
+          onClick: () => {
+            console.log("编辑", row.name);
+          },
+        }),
+        h(CButton, {
+          type: "error",
+          confirm: true,
+          content: "确认删除该文案吗",
+          text: "删除",
+          onClick: () => {
+            console.log("删除", row.name);
+          },
+        }),
       ];
-      return actions;
     },
   },
 ];
-const tableData: ITableData[] = [
+const tableData = ref<ITableData[]>([
+])
+interface IPagination {
+  page: number;
+  itemCount?: number;
+  pageCount?: number;
+  pageSize: number;
+  pageSizes?: Array<any>;
+  showSizePicker?: boolean;
+  prefix(item: any): string
+}
+const pagination = reactive<IPagination>({
+  page: 1,
+  pageCount: 99,
+  itemCount: 987,
+  pageSize: 10,
+  pageSizes: [
+      {
+        label: '10 每页',
+        value: 10
+      },
+      {
+        label: '20 每页',
+        value: 20
+      },
+      {
+        label: '30 每页',
+        value: 30
+      },
+      {
+        label: '40 每页',
+        value: 40
+      }
+    ],
+  prefix ({ itemCount }) {
+    return `共计${itemCount}条`
+  }
+})
+onMounted(() => {
+  tableData.value = [
   { name: "张三", age: 18 },
   {
     name: "李四",
@@ -137,10 +153,40 @@ const tableData: ITableData[] = [
     name: "王五",
     age: 55,
   },
-];
-const pagination = {
-  pageSize: 10,
-};
+  {
+    name: "王五",
+    age: 55,
+  },
+  {
+    name: "王五",
+    age: 55,
+  },
+  {
+    name: "王五",
+    age: 55,
+  },
+  {
+    name: "王五",
+    age: 55,
+  },
+  {
+    name: "王五",
+    age: 55,
+  },
+  {
+    name: "王五",
+    age: 55,
+  },
+  {
+    name: "王五",
+    age: 55,
+  }
+  ]
+})
+const handlePageChange = (page: number) => {
+  pagination.page = page
+  console.log(page)
+}
 </script>
 
 <style scoped></style>
