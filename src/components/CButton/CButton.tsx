@@ -39,7 +39,7 @@ export default defineComponent({
                 {{
                   default: () => props.content,
                   trigger: () => (
-                    <NButton type={props.type} quaternary>
+                    <NButton type={props.type} quaternary size="small">
                       {props.text}
                     </NButton>
                   ),
@@ -52,6 +52,7 @@ export default defineComponent({
               type={props.type}
               quaternary
               v-permission={props.vPermission}
+              size="small"
             >
               {{ default: () => props.text }}
             </NButton>

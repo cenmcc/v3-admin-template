@@ -43,7 +43,14 @@ export const constantRoutes: RouteRecordRaw[] = [
         meta: {
           title: '用户管理'
         },
-        component: () => import('@/views/permissions/userManage.vue')
+        component: () => import('@/views/permissions/userManage.vue'),
+      },
+      {
+        path: 'user-manage/:id',
+        meta: {
+          title: '编辑用户'
+        },
+        component: () => import('@/views/permissions/editUser.vue')
       },
       {
         path: 'role-manage',

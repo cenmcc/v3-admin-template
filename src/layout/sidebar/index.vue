@@ -25,6 +25,7 @@
 <script setup lang="ts">
 import menu from "./data";
 import { useAppStore } from "@/store/modules/app";
+import { url } from "inspector";
 import { NIcon } from "naive-ui";
 import type { MenuOption } from "naive-ui";
 
@@ -43,18 +44,27 @@ const renderIcon = (meta: any) => {
   return () => h(NIcon, null, h("i", { class: `iconfont ${meta.icon || ""}` }));
 };
 // 格式化Menu
+let urlList: string[] = []
 const options = menu.map((parent) => {
   if (parent.children instanceof Array && parent.children.length > 0) {
     parent.children = parent.children.map((c) => {
+      urlList.push(c.urlpath)
       return { ...c, icon: renderIcon(c.meta) };
     });
   }
+  urlList.push(parent.urlpath)
   return { ...parent, icon: renderIcon(parent.meta) };
 });
 
 // 活跃的MenuKey
 const route = useRoute();
-const urlPath = computed(() => route.path);
+const urlPath = computed(() => {
+  const [data] = [...route.matched].reverse()
+  if(data.path.includes(':')) {
+    return data.path.split('/').slice(0, -1).join('/')
+  }
+  return route.path
+});
 
 // Menu点击
 const router = useRouter();
